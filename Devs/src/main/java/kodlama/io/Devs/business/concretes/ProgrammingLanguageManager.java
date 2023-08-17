@@ -2,15 +2,14 @@ package kodlama.io.Devs.business.concretes;
 
 import kodlama.io.Devs.business.abstracts.ProgrammingLanguageService;
 import kodlama.io.Devs.dataAccess.abstracts.ProgrammingLanguageRepository;
-import kodlama.io.Devs.entities.concretes.ProgrammingLanguage;
+import kodlama.io.Devs.entities.ProgrammingLanguage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-@Service // bu sınıf bir business nesnesidir.
+@Service
 public class ProgrammingLanguageManager implements ProgrammingLanguageService {
 
-    private ProgrammingLanguageRepository programmingLanguageRepository;
+    ProgrammingLanguageRepository programmingLanguageRepository;
 
     public ProgrammingLanguageManager(ProgrammingLanguageRepository programmingLanguageRepository) {
         this.programmingLanguageRepository = programmingLanguageRepository;
@@ -22,17 +21,33 @@ public class ProgrammingLanguageManager implements ProgrammingLanguageService {
     }
 
     @Override
-    public void add(ProgrammingLanguage programmingLanguage) {
+    public ProgrammingLanguage getById(int id) {
+        return programmingLanguageRepository.getById(id);
+    }
+
+    @Override
+    public void add(ProgrammingLanguage programmingLanguage) throws Exception{
+        if(programmingLanguage.getName() == null){
+            throw new Exception("Kurs bölümü boş bırakılamaz");
+        }
+        for(ProgrammingLanguage currentProgrammmingLanguage : programmingLanguageRepository.getAll()){
+            if(currentProgrammmingLanguage.equals(programmingLanguage)){
+                throw new Exception("Bu kurs zaten var");
+            }
+        }
+        programmingLanguageRepository.add(programmingLanguage);
 
     }
 
     @Override
     public void upDate(ProgrammingLanguage programmingLanguage) {
+        programmingLanguageRepository.upDate(programmingLanguage);
 
     }
 
     @Override
     public void delete(int id) {
+        programmingLanguageRepository.delete(id);
 
     }
 }

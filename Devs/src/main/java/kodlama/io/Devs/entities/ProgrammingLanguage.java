@@ -1,11 +1,20 @@
-package kodlama.io.Devs.entities.concretes;
+package kodlama.io.Devs.entities;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 public class ProgrammingLanguage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
 
     public ProgrammingLanguage() {
     }
+
 
     public ProgrammingLanguage(int id, String name) {
         this.id = id;
